@@ -1,0 +1,7 @@
+<ul>
+  {{#each this.slices as |slice idx|}}
+    <li id="slice-{{idx}}">{{slice.name}} - {{slice.date}} - {{slice.startTime}} - {{slice.endTime}}</li>
+  {{else}}
+    <p>No slices yet, chop chop</p>
+  {{/each}}
+</ul>

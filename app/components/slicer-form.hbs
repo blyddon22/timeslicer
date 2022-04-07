@@ -1,0 +1,16 @@
+{{#if this.showForm}}
+  <h3>New Slice</h3>
+  <label>Name</label>
+  <Input @id="edit-slice-name" @value={{this.slice.name}}></Input>
+  <label>Date</label>
+  <Input @id="edit-slice-date" @type="date" @value={{this.slice.date}}></Input>
+  <label>Start Time</label>
+  <Input @id="edit-slice-start-time" @type="time" @value={{this.slice.startTime}}></Input>
+  <label>End Time</label>
+  <Input @id="edit-slice-end-time" @type="time" @value={{this.slice.endTime}}></Input>
+  <label>Maximum Guests</label>
+  <Input @id="edit-slice-max-guests" @type="number" @min="1" @value={{this.slice.maxGuests}}></Input>
+  <button {{on "click" (fn this.save)}} id="save">Save Slice</button>
+{{else}}
+  <button {{on "click" (fn this.createSlice)}} id="add-slice">Slice Time</button>
+{{/if}}

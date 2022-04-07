@@ -16,6 +16,9 @@ module.exports = function (environment) {
         Date: false,
       },
     },
+    'ember-cli-mirage': {
+      enabled: true,
+    },
 
     APP: {
       // Here you can pass flags/options to your application instance
