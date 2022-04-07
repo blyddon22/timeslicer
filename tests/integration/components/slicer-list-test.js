@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -20,7 +20,7 @@ module('Integration | Component | slicer-list', function (hooks) {
     await render(hbs`<SlicerList @slices={{this.model}}/>`);
     assert
       .dom('tbody')
-      .hasText(
+      .includesText(
         `${slice.name} ${slice.date} ${slice.startTime} ${slice.endTime} ${slice.maxGuests}`
       );
   });
@@ -53,5 +53,18 @@ module('Integration | Component | slicer-list', function (hooks) {
     assert.dom('#slice-1').includesText('1/1/2022 01:00 02:00');
     assert.dom('#slice-2').includesText('1/1/2022 04:00 05:00');
     assert.dom('#slice-3').includesText('1/2/2022 02:00 03:00');
+  });
+
+  test('it can cancel a slice', async function (assert) {
+    let slice = server.create('slice');
+    let store = this.owner.lookup('service:store');
+    this.set('model', await store.findAll('slice'));
+    await render(hbs`<SlicerList @slices={{this.model}}/>`);
+    await click('#slice-0-cancel');
+    assert
+      .dom('tbody')
+      .hasText(
+        `${slice.name} ${slice.date} ${slice.startTime} ${slice.endTime} ${slice.maxGuests} YUP`
+      );
   });
 });

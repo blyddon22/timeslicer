@@ -7,6 +7,7 @@ export default class SliceModel extends Model {
   @attr('string') startTime;
   @attr('string') endTime;
   @attr('string') maxGuests;
+  @attr('boolean', { defaultValue: false }) canceled;
 
   get filterDate() {
     return this.date

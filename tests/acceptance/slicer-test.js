@@ -23,8 +23,8 @@ module('Acceptance | slicer', function (hooks) {
     await fillIn('#edit-slice-end-time', '06:00');
     await fillIn('#edit-slice-max-guests', '5');
     await click('#save');
-    assert.dom('#slice-0').hasText('Tour 2022-01-01 01:00 03:00 10');
-    assert.dom('#slice-1').hasText('Demo 2022-01-01 04:00 06:00 5');
+    assert.dom('#slice-0').includesText('Tour 2022-01-01 01:00 03:00 10');
+    assert.dom('#slice-1').includesText('Demo 2022-01-01 04:00 06:00 5');
   });
 
   test('adding slice prior to existing puts new slice before existing', async function (assert) {
