@@ -26,4 +26,40 @@ module('Acceptance | slicer', function (hooks) {
     assert.dom('#slice-0').hasText('Tour 2022-01-01 01:00 03:00 10');
     assert.dom('#slice-1').hasText('Demo 2022-01-01 04:00 06:00 5');
   });
+
+  test('adding slice prior to existing puts new slice before existing', async function (assert) {
+    server.create('slice', {
+      date: '2022-01-01',
+      startTime: '02:00',
+      endTime: '03:00',
+    });
+    await visit('/');
+    await click('#add-slice');
+    await fillIn('#edit-slice-name', 'Tour');
+    await fillIn('#edit-slice-date', '2022-01-01');
+    await fillIn('#edit-slice-start-time', '01:00');
+    await fillIn('#edit-slice-end-time', '02:00');
+    await fillIn('#edit-slice-max-guests', '10');
+    await click('#save');
+    assert.dom('#slice-0').includesText('2022-01-01 01:00 02:00');
+    assert.dom('#slice-1').includesText('2022-01-01 02:00 03:00');
+  });
+
+  test('adding slice after existing puts new slice after existing', async function (assert) {
+    server.create('slice', {
+      date: '2022-01-01',
+      startTime: '01:00',
+      endTime: '02:00',
+    });
+    await visit('/');
+    await click('#add-slice');
+    await fillIn('#edit-slice-name', 'Tour');
+    await fillIn('#edit-slice-date', '2022-01-01');
+    await fillIn('#edit-slice-start-time', '03:00');
+    await fillIn('#edit-slice-end-time', '04:00');
+    await fillIn('#edit-slice-max-guests', '10');
+    await click('#save');
+    assert.dom('#slice-0').includesText('2022-01-01 01:00 02:00');
+    assert.dom('#slice-1').includesText('2022-01-01 03:00 04:00');
+  });
 });
