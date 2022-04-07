@@ -7,10 +7,11 @@ export default class SlicerFormComponent extends Component {
   @service store;
 
   @tracked showForm = false;
-  @tracked slice = this.store.createRecord('slice');
+  @tracked slice = null;
 
   @action
   createSlice() {
+    this.slice = this.store.createRecord('slice');
     this.showForm = !this.showForm;
   }
 

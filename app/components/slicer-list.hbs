@@ -1,7 +1,25 @@
-<ul>
-  {{#each this.slices as |slice idx|}}
-    <li id="slice-{{idx}}">{{slice.name}} - {{slice.date}} - {{slice.startTime}} - {{slice.endTime}}</li>
-  {{else}}
-    <p>No slices yet, chop chop</p>
-  {{/each}}
-</ul>
+<h3>Slices</h3>
+{{#if this.slices}}
+  <table>
+    <thead>
+      <td>Name</td>
+      <td>Date</td>
+      <td>Start Time</td>
+      <td>End Time</td>
+      <td>Max Guests</td>
+    </thead>
+    <tbody>
+      {{#each this.slices as |slice idx|}}
+        <tr id="slice-{{idx}}">
+          <td>{{slice.name}}</td>
+          <td>{{slice.date}}</td>
+          <td>{{slice.startTime}}</td>
+          <td>{{slice.endTime}}</td>
+          <td>{{slice.maxGuests}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <p>No slices yet, chop chop</p>
+{{/if}}

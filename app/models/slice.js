@@ -1,4 +1,5 @@
 import Model, { attr } from '@ember-data/model';
+import { DateTime } from 'luxon';
 
 export default class SliceModel extends Model {
   @attr('string') name;
@@ -6,4 +7,10 @@ export default class SliceModel extends Model {
   @attr('string') startTime;
   @attr('string') endTime;
   @attr('string') maxGuests;
+
+  get filterDate() {
+    return this.date
+      ? DateTime.fromFormat(this.date, 'L/d/yyyy').toJSDate()
+      : '';
+  }
 }
