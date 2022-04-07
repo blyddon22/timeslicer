@@ -8,6 +8,7 @@
       <td>End Time</td>
       <td>Max Guests</td>
       <td>Canceled</td>
+      <td>Edit</td>
     </thead>
     <tbody>
       {{#each this.slices as |slice idx|}}
@@ -23,6 +24,9 @@
             <td>NOPE</td>
             <button id="slice-{{idx}}-cancel" {{on "click" (fn this.cancel slice)}}>Cancel</button>
           {{/if}}
+          <td>
+            <button id="slice-{{idx}}-edit" {{on "click" (fn this.edit slice)}}>Edit</button>
+          </td>
         </tr>
       {{/each}}
     </tbody>

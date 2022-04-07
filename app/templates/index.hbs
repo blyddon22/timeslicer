@@ -1,3 +1,3 @@
-<SlicerForm />
+<SlicerForm @slice={{this.sliceToEdit}} @showForm={{this.showEdit}}/>
 
-<SlicerList @slices={{this.model}}/>
+<SlicerList @slices={{this.model}} @edit={{this.setEditSlice}}/>

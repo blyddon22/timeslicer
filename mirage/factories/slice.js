@@ -1,12 +1,13 @@
 import { Factory } from 'miragejs';
 import { faker } from '@faker-js/faker';
+import { DateTime } from 'luxon';
 
 export default Factory.extend({
   name() {
     return faker.lorem.word();
   },
   date() {
-    return faker.date.future().toLocaleDateString();
+    return DateTime.fromJSDate(faker.date.future()).toFormat('yyyy-LL-dd');
   },
   startTime() {
     return faker.date.future().toLocaleTimeString('en-US', {

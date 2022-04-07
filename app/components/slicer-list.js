@@ -17,4 +17,12 @@ export default class SlicerListComponent extends Component {
     slice.canceled = true;
     slice.save();
   }
+
+  @action
+  edit(slice) {
+    if (this.args.edit) {
+      this.args.edit(slice);
+    }
+    console.log('Forgot to pass me a function');
+  }
 }

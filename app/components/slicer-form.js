@@ -6,8 +6,22 @@ import { inject as service } from '@ember/service';
 export default class SlicerFormComponent extends Component {
   @service store;
 
-  @tracked showForm = false;
-  @tracked slice = null;
+  @tracked _showForm = false;
+  @tracked _slice = undefined;
+
+  get showForm() {
+    return this._showForm || this.args.showForm;
+  }
+  set showForm(val) {
+    this._showForm = val;
+  }
+
+  get slice() {
+    return this._slice || this.args.slice;
+  }
+  set slice(val) {
+    this._slice = val;
+  }
 
   @action
   createSlice() {

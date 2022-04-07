@@ -62,4 +62,24 @@ module('Acceptance | slicer', function (hooks) {
     assert.dom('#slice-0').includesText('2022-01-01 01:00 02:00');
     assert.dom('#slice-1').includesText('2022-01-01 03:00 04:00');
   });
+
+  test('editing a slice shows changes', async function (assert) {
+    let slice = server.create('slice');
+    await visit('/');
+    assert
+      .dom('#slice-0')
+      .hasText(
+        `${slice.name} ${slice.date} ${slice.startTime} ${slice.endTime} ${slice.maxGuests} NOPE Cancel Edit`
+      );
+    await click('#slice-0-edit');
+    await fillIn('#edit-slice-name', 'Tour');
+    await fillIn('#edit-slice-date', '2022-01-01');
+    await fillIn('#edit-slice-start-time', '01:00');
+    await fillIn('#edit-slice-end-time', '02:00');
+    await fillIn('#edit-slice-max-guests', '10');
+    await click('#save');
+    assert
+      .dom('#slice-0')
+      .hasText('Tour 2022-01-01 01:00 02:00 10 NOPE Cancel Edit');
+  });
 });

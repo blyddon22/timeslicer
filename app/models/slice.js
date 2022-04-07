@@ -11,7 +11,7 @@ export default class SliceModel extends Model {
 
   get filterDate() {
     return this.date
-      ? DateTime.fromFormat(this.date, 'L/d/yyyy').toJSDate()
+      ? DateTime.fromFormat(this.date, 'yyyy-LL-dd').toJSDate()
       : '';
   }
 }
