@@ -14,4 +14,27 @@ export default class SliceModel extends Model {
       ? DateTime.fromFormat(this.date, 'yyyy-LL-dd').toJSDate()
       : '';
   }
+
+  toMinutes(timeStr) {
+    if (timeStr) {
+      let splitTime = timeStr.split(':');
+      let hours = splitTime[0];
+      let minutes = splitTime[1];
+      return parseInt(hours) * 60 + parseInt(minutes);
+    }
+
+    return 0;
+  }
+
+  get startTimeInMinutes() {
+    return this.toMinutes(this.startTime);
+  }
+
+  get endTimeInMinutes() {
+    return this.toMinutes(this.endTime);
+  }
+
+  // inRange(index) {
+  //   return this.startTimeInMinutes <= index >= this.endTimeInMinutes;
+  // }
 }

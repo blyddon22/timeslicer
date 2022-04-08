@@ -1,36 +1,41 @@
-<h3>Slices</h3>
-{{#if this.slices}}
-  <table>
-    <thead>
-      <td>Name</td>
-      <td>Date</td>
-      <td>Start Time</td>
-      <td>End Time</td>
-      <td>Max Guests</td>
-      <td>Canceled</td>
-      <td>Edit</td>
-    </thead>
-    <tbody>
-      {{#each this.slices as |slice idx|}}
-        <tr id="slice-{{idx}}">
-          <td>{{slice.name}}</td>
-          <td>{{slice.date}}</td>
-          <td>{{slice.startTime}}</td>
-          <td>{{slice.endTime}}</td>
-          <td>{{slice.maxGuests}}</td>
-          {{#if slice.canceled}}
-            <td>YUP</td>
-          {{else}}
-            <td>NOPE</td>
-            <button id="slice-{{idx}}-cancel" {{on "click" (fn this.cancel slice)}}>Cancel</button>
-          {{/if}}
-          <td>
-            <button id="slice-{{idx}}-edit" {{on "click" (fn this.edit slice)}}>Edit</button>
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-{{else}}
-  <p>No slices yet, chop chop</p>
-{{/if}}
+<div class="overflow-auto h-screen">
+  <div class="p-4">
+    {{#each this.slices as |slice idx|}}
+      {{#if (is-hour idx)}}
+        {{#if slice.occupied}}
+          <div class="flex">
+            <p class="text-justify w-16">{{from-minutes idx}}</p>
+
+            {{#each slice.occupants as |occupant|}}
+              {{#if (time-match (from-minutes idx) occupant.startTime)}}
+                <div class="{{if occupant.canceled 'bg-red-200' 'bg-green-200'}} w-1/2 px-4 rounded-t mx-2">
+                  <p><span class="text-2xl">{{occupant.name}}</span><span class="text-sm font-bold">{{if occupant.canceled ' Canceled' ''}}</span></p>
+                  <p>{{occupant.startTime}} - {{occupant.endTime}}</p>
+                  <p>Max Guests: {{occupant.maxGuests}}</p>
+                  {{#unless occupant.canceled}}
+                    <button id="occupant-{{idx}}-cancel" {{on "click" (fn this.cancel occupant)}}>Cancel</button>
+                  {{/unless}}
+                  <button id="occupant-{{idx}}-edit" {{on "click" (fn this.edit occupant)}}>Edit</button>
+                </div>
+              {{else}}
+                {{#if (time-match (from-minutes idx) occupant.endTime)}}
+                  <div class="{{if occupant.canceled 'bg-red-200' 'bg-green-200'}} w-1/2 px-4 mb-2 rounded-b mx-2">
+                  </div>
+                {{else}}
+                  <div class="{{if occupant.canceled 'bg-red-200' 'bg-green-200'}} w-1/2 px-4 mx-2">
+                  </div>
+                {{/if}}
+              {{/if}}
+            {{/each}}
+          </div>
+        {{else}}
+          <div class="py-4">
+            <div class="flex">
+              <p class="pr-4">{{from-minutes idx}}</p>
+            </div>
+          </div>
+        {{/if}}
+      {{/if}}
+    {{/each}}
+  </div>
+</div>

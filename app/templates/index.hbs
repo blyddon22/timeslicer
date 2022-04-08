@@ -1,3 +1,9 @@
-<SlicerForm @slice={{this.sliceToEdit}} @showForm={{this.showEdit}}/>
-
-<SlicerList @slices={{this.model}} @edit={{this.setEditSlice}}/>
+<div class="grid grid-cols-2 gap-4">
+  <div class="p-4">
+    <h1 class="text-5xl">Timeslicer</h1>
+    <div class="pt-8">
+      <SlicerForm @slice={{this.sliceToEdit}} @showForm={{this.showEdit}}/>
+    </div>
+  </div>
+  <SlicerList @slices={{this.model}} @edit={{this.setEditSlice}}/>
+</div>

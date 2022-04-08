@@ -1,15 +1,40 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
 export default class SlicerListComponent extends Component {
-  @service store;
+  // slices = new Array(1440);
 
   get slices() {
+    let base = new Array(1440).fill({
+      occupied: false,
+      occupants: [],
+    });
+
     if (this.args.slices) {
-      return this.args.slices.sortBy('filterDate', 'startTime', 'endTime');
+      let sortedSlices = this.args.slices.sortBy(
+        'filterDate',
+        'startTime',
+        'endTime'
+      );
+
+      return base.map((slice, idx) => {
+        let matches = sortedSlices.filter((slice) => {
+          return (
+            slice.startTimeInMinutes <= idx && idx <= slice.endTimeInMinutes
+          );
+        });
+
+        if (matches.length) {
+          return {
+            occupied: true,
+            occupants: matches,
+          };
+        }
+
+        return slice;
+      });
     }
-    return [];
+    return base;
   }
 
   @action
@@ -21,7 +46,7 @@ export default class SlicerListComponent extends Component {
   @action
   edit(slice) {
     if (this.args.edit) {
-      this.args.edit(slice);
+      return this.args.edit(slice);
     }
     console.log('Forgot to pass me a function');
   }
