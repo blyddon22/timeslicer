@@ -2,39 +2,16 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 export default class SlicerListComponent extends Component {
-  // slices = new Array(1440);
-
   get slices() {
-    let base = new Array(1440).fill({
-      occupied: false,
-      occupants: [],
+    let slices = this.args.slices.sortBy('filterDate', 'startTime', 'endTime');
+
+    return slices.map((slice) => {
+      let ceil = Math.ceil(slice.startTimeInMinutes / 30);
+      let row = slice.startTimeInMinutes % 30 === 0 ? ceil + 1 : ceil;
+      let span = (slice.endTimeInMinutes - slice.startTimeInMinutes) / 30 + 1;
+
+      return { slice: slice, row: row, span: span };
     });
-
-    if (this.args.slices) {
-      let sortedSlices = this.args.slices.sortBy(
-        'filterDate',
-        'startTime',
-        'endTime'
-      );
-
-      return base.map((slice, idx) => {
-        let matches = sortedSlices.filter((slice) => {
-          return (
-            slice.startTimeInMinutes <= idx && idx <= slice.endTimeInMinutes
-          );
-        });
-
-        if (matches.length) {
-          return {
-            occupied: true,
-            occupants: matches,
-          };
-        }
-
-        return slice;
-      });
-    }
-    return base;
   }
 
   @action

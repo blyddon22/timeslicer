@@ -22,7 +22,6 @@ export default class SliceModel extends Model {
       let minutes = splitTime[1];
       return parseInt(hours) * 60 + parseInt(minutes);
     }
-
     return 0;
   }
 
@@ -33,8 +32,4 @@ export default class SliceModel extends Model {
   get endTimeInMinutes() {
     return this.toMinutes(this.endTime);
   }
-
-  // inRange(index) {
-  //   return this.startTimeInMinutes <= index >= this.endTimeInMinutes;
-  // }
 }
