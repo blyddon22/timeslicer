@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click, fillIn } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | slicer-form', function (hooks) {
   setupRenderingTest(hooks);
@@ -86,6 +87,7 @@ module('Integration | Component | slicer-form', function (hooks) {
   test('it shows message when form is invalid', async function (assert) {
     await render(hbs`<SlicerForm/>`);
     await click('#add-slice');
+    await fillIn('#edit-slice-date', '');
     await click('#save');
     assert.dom('#error-msg').exists();
     assert.dom('#edit-slice-name.bg-red-200').exists();
@@ -93,5 +95,13 @@ module('Integration | Component | slicer-form', function (hooks) {
     assert.dom('#edit-slice-date.bg-red-200').exists();
     assert.dom('#edit-slice-start-time.bg-red-200').exists();
     assert.dom('#edit-slice-end-time.bg-red-200').exists();
+  });
+
+  test('it defaults the date to today', async function (assert) {
+    await render(hbs`<SlicerForm />`);
+    await click('#add-slice');
+    assert
+      .dom('#edit-slice-date')
+      .hasValue(DateTime.now().toFormat('yyyy-LL-dd'));
   });
 });
