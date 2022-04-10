@@ -69,7 +69,7 @@ module('Integration | Component | slicer-form', function (hooks) {
     assert.dom('#edit-slice-name').doesNotExist();
   });
 
-  test('it can cancel existing slice', async function (assert) {
+  test('it can cancel editing existing slice', async function (assert) {
     this.set(
       'slice',
       await this.owner
@@ -77,8 +77,11 @@ module('Integration | Component | slicer-form', function (hooks) {
         .findRecord('slice', server.create('slice').id)
     );
     this.set('showForm', true);
+    this.set('setEditSlice', () => {
+      this.set('slice', undefined);
+    });
     await render(
-      hbs`<SlicerForm @showForm={{this.showForm}} @slice={{this.slice}}/>`
+      hbs`<SlicerForm @showForm={{this.showForm}} @slice={{this.slice}} @setEditSlice={{this.setEditSlice}}/>`
     );
     await click('#cancel');
     assert.dom('#edit-slice-name').doesNotExist();

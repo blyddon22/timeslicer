@@ -2,11 +2,7 @@
   <div class="p-4">
     <h1 class="text-5xl">Timeslicer</h1>
     <div class="pt-8">
-      {{#if this.showEdit}}
-        <SlicerForm @slice={{this.sliceToEdit}} @showForm={{true}}/>
-      {{else}}
-        <SlicerForm @slice={{this.sliceToEdit}} @showForm={{false}}/>
-      {{/if}}
+      <SlicerForm @slice={{this.sliceToEdit}} @showForm={{true}} @setEditSlice={{this.setEditSlice}}/>
     </div>
   </div>
 

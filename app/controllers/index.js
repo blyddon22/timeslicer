@@ -9,6 +9,6 @@ export default class IndexController extends Controller {
   @action
   setEditSlice(slice) {
     this.sliceToEdit = slice;
-    this.showEdit = true;
+    // this.showEdit = true;
   }
 }
