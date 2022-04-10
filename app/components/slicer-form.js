@@ -6,11 +6,11 @@ import { inject as service } from '@ember/service';
 export default class SlicerFormComponent extends Component {
   @service store;
 
-  @tracked _showForm = false;
+  @tracked _showForm = this.args.showForm;
   @tracked _slice = undefined;
 
   get showForm() {
-    return this._showForm || this.args.showForm;
+    return this._showForm;
   }
   set showForm(val) {
     this._showForm = val;
@@ -39,7 +39,10 @@ export default class SlicerFormComponent extends Component {
   cancel() {
     if (this.slice.isNew) {
       this.store.deleteRecord(this.slice);
+    } else {
+      this.slice.rollbackAttributes();
     }
+
     this.slice = undefined;
     this.showForm = false;
   }

@@ -67,4 +67,19 @@ module('Integration | Component | slicer-form', function (hooks) {
     await click('#cancel');
     assert.dom('#edit-slice-name').doesNotExist();
   });
+
+  test('it can cancel existing slice', async function (assert) {
+    this.set(
+      'slice',
+      await this.owner
+        .lookup('service:store')
+        .findRecord('slice', server.create('slice').id)
+    );
+    this.set('showForm', true);
+    await render(
+      hbs`<SlicerForm @showForm={{this.showForm}} @slice={{this.slice}}/>`
+    );
+    await click('#cancel');
+    assert.dom('#edit-slice-name').doesNotExist();
+  });
 });

@@ -91,4 +91,14 @@ module('Acceptance | slicer', function (hooks) {
     await click('#cancel');
     assert.dom('#slice-').doesNotExist();
   });
+
+  test('canceling changes on existing slice reverts changes', async function (assert) {
+    server.create('slice', { name: 'Other' });
+    await visit('/');
+    await click('#slice-1');
+    await click('#slice-edit');
+    await fillIn('#edit-slice-name', 'Tour');
+    await click('#cancel');
+    assert.dom('#slice-list .bg-blue-200 .text-sm').hasText('Other');
+  });
 });
