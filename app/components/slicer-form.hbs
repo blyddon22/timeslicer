@@ -1,16 +1,33 @@
 {{#if this.showForm}}
-  <h3>New Slice</h3>
-  <label>Name</label>
-  <Input @id="edit-slice-name" @value={{this.slice.name}}></Input>
-  <label>Date</label>
-  <Input @id="edit-slice-date" @type="date" @value={{this.slice.date}}></Input>
-  <label>Start Time</label>
-  <Input @id="edit-slice-start-time" @type="time" @value={{this.slice.startTime}}></Input>
-  <label>End Time</label>
-  <Input @id="edit-slice-end-time" @type="time" @value={{this.slice.endTime}}></Input>
-  <label>Maximum Guests</label>
-  <Input @id="edit-slice-max-guests" @type="number" @min="1" @value={{this.slice.maxGuests}}></Input>
-  <button {{on "click" (fn this.save)}} id="save">Save Slice</button>
+  <div class="p-4 bg-white rounded-md w-2/3">
+    <h3 class="text-2xl">New Slice</h3>
+    <div class="grid grid-cols-3 gap-4 my-4">
+      <div class="col-span-2">
+        <label class="block">Name</label>
+        <Input @id="edit-slice-name" @value={{this.slice.name}} class="rounded-md border-gray-300 my-1 block w-full"></Input>
+      </div>
+      <div class="col-span-1">
+        <label class="block">Maximum Guests</label>
+        <Input @id="edit-slice-max-guests" @type="number" @min="1" @value={{this.slice.maxGuests}} class="rounded-md border-gray-300 my-1 block w-full"></Input>
+      </div>
+      <div class="col-span-1">
+        <label class="block">Date</label>
+        <Input @id="edit-slice-date" @type="date" @value={{this.slice.date}} class="rounded-md border-gray-300 my-1 w-full"></Input>
+      </div>
+      <div class="col-span-1">
+        <label class="block">Start Time</label>
+        <Input @id="edit-slice-start-time" @type="time" @value={{this.slice.startTime}} class="rounded-md border-gray-300 my-1 w-full"></Input>
+      </div>
+      <div class="col-span-1">
+        <label class="block">End Time</label>
+        <Input @id="edit-slice-end-time" @type="time" @value={{this.slice.endTime}} class="rounded-md border-gray-300 my-1 w-full"></Input>
+      </div>
+    </div>
+    <div class="flex justify-between">
+      <button {{on "click" (fn this.cancel)}} id="cancel" class="bg-red-500 py-2 px-4 rounded col-span-1 justify-center text-white hover:bg-red-800">Cancel</button>
+      <button {{on "click" (fn this.save)}} id="save" class="bg-green-500 py-2 px-4 rounded col-span-1 justify-center text-white hover:bg-green-800">Save</button>
+    </div>
+  </div>
 {{else}}
-  <button {{on "click" (fn this.createSlice)}} id="add-slice">Slice Time</button>
+  <button {{on "click" (fn this.createSlice)}} id="add-slice" class="bg-blue-400 rounded py-2 px-4 text-white hover:bg-blue-600">Slice Time</button>
 {{/if}}

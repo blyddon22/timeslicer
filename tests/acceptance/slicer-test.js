@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, click, fillIn } from '@ember/test-helpers';
+import { visit, click, fillIn, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -23,12 +23,11 @@ module('Acceptance | slicer', function (hooks) {
     await fillIn('#edit-slice-end-time', '06:00');
     await fillIn('#edit-slice-max-guests', '5');
     await click('#save');
-    assert.dom('#slice-0').includesText('Tour 2022-01-01 01:00 03:00 10');
-    assert.dom('#slice-1').includesText('Demo 2022-01-01 04:00 06:00 5');
+    assert.dom('#slice-list .bg-blue-200').exists({ count: 2 });
   });
 
   test('adding slice prior to existing puts new slice before existing', async function (assert) {
-    server.create('slice', {
+    let slice = server.create('slice', {
       date: '2022-01-01',
       startTime: '02:00',
       endTime: '03:00',
@@ -41,12 +40,14 @@ module('Acceptance | slicer', function (hooks) {
     await fillIn('#edit-slice-end-time', '02:00');
     await fillIn('#edit-slice-max-guests', '10');
     await click('#save');
-    assert.dom('#slice-0').includesText('2022-01-01 01:00 02:00');
-    assert.dom('#slice-1').includesText('2022-01-01 02:00 03:00');
+    let slices = findAll('#slice-list .bg-blue-200 .text-sm').map((item) =>
+      item.textContent.trim()
+    );
+    assert.deepEqual(slices, ['Tour', slice.name]);
   });
 
   test('adding slice after existing puts new slice after existing', async function (assert) {
-    server.create('slice', {
+    let slice = server.create('slice', {
       date: '2022-01-01',
       startTime: '01:00',
       endTime: '02:00',
@@ -59,27 +60,26 @@ module('Acceptance | slicer', function (hooks) {
     await fillIn('#edit-slice-end-time', '04:00');
     await fillIn('#edit-slice-max-guests', '10');
     await click('#save');
-    assert.dom('#slice-0').includesText('2022-01-01 01:00 02:00');
-    assert.dom('#slice-1').includesText('2022-01-01 03:00 04:00');
+    let slices = findAll('#slice-list .bg-blue-200 .text-sm').map((item) =>
+      item.textContent.trim()
+    );
+    assert.deepEqual(slices, [slice.name, 'Tour']);
   });
 
   test('editing a slice shows changes', async function (assert) {
-    let slice = server.create('slice');
+    let slice = server.create('slice', { startTime: '00:00' });
     await visit('/');
     assert
-      .dom('#slice-0')
-      .hasText(
-        `${slice.name} ${slice.date} ${slice.startTime} ${slice.endTime} ${slice.maxGuests} NOPE Cancel Edit`
-      );
-    await click('#slice-0-edit');
+      .dom('#slice-list .bg-blue-200')
+      .hasText(`${slice.name} ${slice.startTime} - ${slice.endTime}`);
+    await click('#slice-1');
+    await click('#slice-edit');
     await fillIn('#edit-slice-name', 'Tour');
     await fillIn('#edit-slice-date', '2022-01-01');
     await fillIn('#edit-slice-start-time', '01:00');
     await fillIn('#edit-slice-end-time', '02:00');
     await fillIn('#edit-slice-max-guests', '10');
     await click('#save');
-    assert
-      .dom('#slice-0')
-      .hasText('Tour 2022-01-01 01:00 02:00 10 NOPE Cancel Edit');
+    assert.dom('#slice-list .bg-blue-200').hasText('Tour 01:00 - 02:00');
   });
 });

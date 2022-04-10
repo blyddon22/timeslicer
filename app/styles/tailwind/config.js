@@ -47,5 +47,11 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 };
+
+// <p>Max Guests: {{slice.slice.maxGuests}}</p>
+// {{#unless slice.slice.canceled}}
+//   <button id="occupant-{{idx}}-cancel" {{on "click" (fn this.cancel slice.slice)}}>Cancel</button>
+// {{/unless}}
+// <button id="occupant-{{idx}}-edit" {{on "click" (fn this.edit slice.slice)}}>Edit</button>

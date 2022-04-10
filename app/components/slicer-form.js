@@ -34,4 +34,11 @@ export default class SlicerFormComponent extends Component {
     this.slice.save();
     this.showForm = !this.showForm;
   }
+
+  @action
+  cancel() {
+    // TODO if its a new slice delete it.
+    this.slice = undefined;
+    this.showForm = false;
+  }
 }

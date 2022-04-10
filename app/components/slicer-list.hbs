@@ -1,5 +1,5 @@
 <div class="overflow-auto h-screen">
-  <div class="p-4 grid grid-rows-[48] grid-cols-[70px,auto] gap-4">
+  <div class="p-4 grid grid-rows-[repeat(48,50px)] grid-cols-[70px,auto] gap-x-4 gap-y-1" id="slice-list">
     <div class="row-start-[1] text-sm text-right">0:00 AM</div>
     <div class="row-start-[2] text-sm text-right"></div>
     <div class="row-start-[3] text-sm text-right">1:00 AM</div>
@@ -49,15 +49,57 @@
     <div class="row-start-[47] text-sm text-right">11:00 PM</div>
 
     {{#each this.slices as |slice|}}
-      <div class="row-start-[{{slice.row}}] row-span-{{slice.span}} {{if slice.slice.canceled 'bg-red-200' 'bg-green-200'}} rounded px-4">
-        <p><span class="text-2xl">{{slice.slice.name}}</span><span class="text-sm font-bold">{{if slice.slice.canceled ' Canceled' ''}}</span></p>
-        <p>{{slice.slice.startTime}} - {{slice.slice.endTime}}</p>
-        <p>Max Guests: {{slice.slice.maxGuests}}</p>
-        {{#unless slice.slice.canceled}}
-          <button id="occupant-{{idx}}-cancel" {{on "click" (fn this.cancel slice.slice)}}>Cancel</button>
-        {{/unless}}
-        <button id="occupant-{{idx}}-edit" {{on "click" (fn this.edit slice.slice)}}>Edit</button>
-      </div>
+      <a id="slice-{{slice.slice.id}}" class="row-start-[{{slice.row}}] row-span-{{slice.span}} {{if slice.slice.canceled 'bg-red-200 hover:bg-red-300' 'bg-blue-200 hover:bg-blue-300'}} rounded px-4 pb-2" {{on "click" (fn this.view slice.slice)}}>
+        <p><span class="text-sm">{{slice.slice.name}}</span><span class="text-xs font-bold">{{if slice.slice.canceled ' Canceled' ''}}</span></p>
+        <p class="text-xs">{{slice.slice.startTime}} - {{slice.slice.endTime}}</p>
+      </a>
     {{/each}}
   </div>
 </div>
+
+{{#if this.slice}}
+  <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+      <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full" id="viewing-slice">
+              <div class="flex justify-between">
+                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">{{this.slice.name}}</h3>
+                <button id="slice-edit" {{on "click" (fn this.edit this.slice)}}>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  </svg>
+                </button>
+              </div>
+              <div class="mt-2">
+                <p class="text-sm text-gray-500">{{this.slice.startTime}} - {{this.slice.endTime}}</p>
+                <p class="text-sm text-gray-500">Max Guests: {{this.slice.maxGuests}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          {{#unless this.slice.canceled}}
+            <button type="button" id="cancel-slice" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm" {{on "click" (fn this.cancel this.slice)}}>Cancel Event</button>
+          {{/unless}}
+          <button id="close" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" {{on "click" (fn this.view false)}}>Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/if}}
+
+<!-- This is necessary because of nature of dynamically generating the slices -->
+<!-- row-span-1 row-span-2 row-span-3 row-span-4 row-span-5 row-span-6 -->
+<!-- row-span-7 row-span-8 row-span-9 row-span-10 row-span-11 row-span-12 -->
+<!-- row-span-13 row-span-14 row-span-15 row-span-16 row-span-17 row-span-18 -->
+<!-- row-span-19 row-span-20 row-span-21 row-span-22 row-span-23 row-span-24 -->
+<!-- row-span-25 row-span-26 row-span-27 row-span-28 row-span-29 row-span-30 -->
+<!-- row-span-31 row-span-32 row-span-33 row-span-34 row-span-35 row-span-36 -->
+<!-- row-span-37 row-span-38 row-span-39 row-span-40 row-span-41 row-span-42 -->
+<!-- row-span-43 row-span-44 row-span-45 row-span-46 row-span-47 -->
