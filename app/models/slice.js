@@ -9,12 +9,6 @@ export default class SliceModel extends Model {
   @attr('string') maxGuests;
   @attr('boolean', { defaultValue: false }) canceled;
 
-  get filterDate() {
-    return this.date
-      ? DateTime.fromFormat(this.date, 'yyyy-LL-dd').toJSDate()
-      : '';
-  }
-
   toMinutes(timeStr) {
     if (timeStr) {
       let splitTime = timeStr.split(':');

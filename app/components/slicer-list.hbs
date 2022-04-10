@@ -1,66 +1,64 @@
-<div class="grid">
-  <div class="flex justify-between px-4 pt-4">
+<div class="grid overflow-hidden h-screen">
+  <div class="flex justify-between px-4 pt-4 border-b-2 border-gray-300 pb-2">
     <button class="rounded bg-white text-gray-900 border-gray-300 border-2 px-4" {{on "click" (fn this.updateDateOffset -1)}}>Previous</button>
     <p class="text-center">{{this.formattedDate}}</p>
     <button class="rounded bg-white text-gray-900 border-gray-300 border-2 px-4" {{on "click" (fn this.updateDateOffset 1)}}>Next</button>
   </div>
-  <div class="overflow-auto h-screen">
-    <div class="p-4 grid grid-cols-[70px] gap-x-4 gap-y-1" id="slice-list">
-      <div class="row-start-[1] text-sm text-right h-20">0:00 AM</div>
-      <div class="row-start-[2] text-sm text-right h-20"></div>
-      <div class="row-start-[3] text-sm text-right h-20">1:00 AM</div>
-      <div class="row-start-[4] text-sm text-right h-20"></div>
-      <div class="row-start-[5] text-sm text-right h-20">2:00 AM</div>
-      <div class="row-start-[6] text-sm text-right h-20"></div>
-      <div class="row-start-[7] text-sm text-right h-20">3:00 AM</div>
-      <div class="row-start-[8] text-sm text-right h-20"></div>
-      <div class="row-start-[9] text-sm text-right h-20">4:00 AM</div>
-      <div class="row-start-[10] text-sm text-right h-20"></div>
-      <div class="row-start-[11] text-sm text-right h-20">5:00 AM</div>
-      <div class="row-start-[12] text-sm text-right h-20"></div>
-      <div class="row-start-[13] text-sm text-right h-20">6:00 AM</div>
-      <div class="row-start-[14] text-sm text-right h-20"></div>
-      <div class="row-start-[15] text-sm text-right h-20">7:00 AM</div>
-      <div class="row-start-[16] text-sm text-right h-20"></div>
-      <div class="row-start-[17] text-sm text-right h-20">8:00 AM</div>
-      <div class="row-start-[18] text-sm text-right h-20"></div>
-      <div class="row-start-[19] text-sm text-right h-20">9:00 AM</div>
-      <div class="row-start-[20] text-sm text-right h-20"></div>
-      <div class="row-start-[21] text-sm text-right h-20">10:00 AM</div>
-      <div class="row-start-[22] text-sm text-right h-20"></div>
-      <div class="row-start-[23] text-sm text-right h-20">11:00 AM</div>
-      <div class="row-start-[24] text-sm text-right h-20"></div>
-      <div class="row-start-[25] text-sm text-right h-20">12:00 PM</div>
-      <div class="row-start-[26] text-sm text-right h-20"></div>
-      <div class="row-start-[27] text-sm text-right h-20">1:00 PM</div>
-      <div class="row-start-[28] text-sm text-right h-20"></div>
-      <div class="row-start-[29] text-sm text-right h-20">2:00 PM</div>
-      <div class="row-start-[30] text-sm text-right h-20"></div>
-      <div class="row-start-[31] text-sm text-right h-20">3:00 PM</div>
-      <div class="row-start-[32] text-sm text-right h-20"></div>
-      <div class="row-start-[33] text-sm text-right h-20">4:00 PM</div>
-      <div class="row-start-[34] text-sm text-right h-20"></div>
-      <div class="row-start-[35] text-sm text-right h-20">5:00 PM</div>
-      <div class="row-start-[36] text-sm text-right h-20"></div>
-      <div class="row-start-[37] text-sm text-right h-20">6:00 PM</div>
-      <div class="row-start-[38] text-sm text-right h-20"></div>
-      <div class="row-start-[39] text-sm text-right h-20">7:00 PM</div>
-      <div class="row-start-[40] text-sm text-right h-20"></div>
-      <div class="row-start-[41] text-sm text-right h-20">8:00 PM</div>
-      <div class="row-start-[42] text-sm text-right h-20"></div>
-      <div class="row-start-[43] text-sm text-right h-20">9:00 PM</div>
-      <div class="row-start-[44] text-sm text-right h-20"></div>
-      <div class="row-start-[45] text-sm text-right h-20">10:00 PM</div>
-      <div class="row-start-[46] text-sm text-right h-20"></div>
-      <div class="row-start-[47] text-sm text-right h-20">11:00 PM</div>
+  <div class="p-4 grid grid-cols-[70px] gap-x-4 gap-y-1 overflow-scroll" id="slice-list">
+    <div class="row-start-[1] text-sm text-right h-20">0:00 AM</div>
+    <div class="row-start-[2] text-sm text-right h-20"></div>
+    <div class="row-start-[3] text-sm text-right h-20">1:00 AM</div>
+    <div class="row-start-[4] text-sm text-right h-20"></div>
+    <div class="row-start-[5] text-sm text-right h-20">2:00 AM</div>
+    <div class="row-start-[6] text-sm text-right h-20"></div>
+    <div class="row-start-[7] text-sm text-right h-20">3:00 AM</div>
+    <div class="row-start-[8] text-sm text-right h-20"></div>
+    <div class="row-start-[9] text-sm text-right h-20">4:00 AM</div>
+    <div class="row-start-[10] text-sm text-right h-20"></div>
+    <div class="row-start-[11] text-sm text-right h-20">5:00 AM</div>
+    <div class="row-start-[12] text-sm text-right h-20"></div>
+    <div class="row-start-[13] text-sm text-right h-20">6:00 AM</div>
+    <div class="row-start-[14] text-sm text-right h-20"></div>
+    <div class="row-start-[15] text-sm text-right h-20">7:00 AM</div>
+    <div class="row-start-[16] text-sm text-right h-20"></div>
+    <div class="row-start-[17] text-sm text-right h-20">8:00 AM</div>
+    <div class="row-start-[18] text-sm text-right h-20"></div>
+    <div class="row-start-[19] text-sm text-right h-20">9:00 AM</div>
+    <div class="row-start-[20] text-sm text-right h-20"></div>
+    <div class="row-start-[21] text-sm text-right h-20">10:00 AM</div>
+    <div class="row-start-[22] text-sm text-right h-20"></div>
+    <div class="row-start-[23] text-sm text-right h-20">11:00 AM</div>
+    <div class="row-start-[24] text-sm text-right h-20"></div>
+    <div class="row-start-[25] text-sm text-right h-20">12:00 PM</div>
+    <div class="row-start-[26] text-sm text-right h-20"></div>
+    <div class="row-start-[27] text-sm text-right h-20">1:00 PM</div>
+    <div class="row-start-[28] text-sm text-right h-20"></div>
+    <div class="row-start-[29] text-sm text-right h-20">2:00 PM</div>
+    <div class="row-start-[30] text-sm text-right h-20"></div>
+    <div class="row-start-[31] text-sm text-right h-20">3:00 PM</div>
+    <div class="row-start-[32] text-sm text-right h-20"></div>
+    <div class="row-start-[33] text-sm text-right h-20">4:00 PM</div>
+    <div class="row-start-[34] text-sm text-right h-20"></div>
+    <div class="row-start-[35] text-sm text-right h-20">5:00 PM</div>
+    <div class="row-start-[36] text-sm text-right h-20"></div>
+    <div class="row-start-[37] text-sm text-right h-20">6:00 PM</div>
+    <div class="row-start-[38] text-sm text-right h-20"></div>
+    <div class="row-start-[39] text-sm text-right h-20">7:00 PM</div>
+    <div class="row-start-[40] text-sm text-right h-20"></div>
+    <div class="row-start-[41] text-sm text-right h-20">8:00 PM</div>
+    <div class="row-start-[42] text-sm text-right h-20"></div>
+    <div class="row-start-[43] text-sm text-right h-20">9:00 PM</div>
+    <div class="row-start-[44] text-sm text-right h-20"></div>
+    <div class="row-start-[45] text-sm text-right h-20">10:00 PM</div>
+    <div class="row-start-[46] text-sm text-right h-20"></div>
+    <div class="row-start-[47] text-sm text-right h-20">11:00 PM</div>
 
-      {{#each this.slices as |slice|}}
-        <a id="slice-{{slice.slice.id}}" class="row-start-[{{slice.row}}] row-span-{{slice.span}} {{if slice.slice.canceled 'bg-red-200 hover:bg-red-300' 'bg-blue-200 hover:bg-blue-300'}} rounded px-4 pb-2" {{on "click" (fn this.view slice.slice)}}>
-          <p><span class="text-sm">{{slice.slice.name}}</span><span class="text-xs font-bold">{{if slice.slice.canceled ' Canceled' ''}}</span></p>
-          <p class="text-xs">{{slice.slice.startTime}} - {{slice.slice.endTime}}</p>
-        </a>
-      {{/each}}
-    </div>
+    {{#each this.slices as |slice|}}
+      <a id="slice-{{slice.slice.id}}" class="row-start-[{{slice.row}}] row-span-{{slice.span}} {{if slice.slice.canceled 'bg-red-200 hover:bg-red-300' 'bg-blue-200 hover:bg-blue-300'}} rounded px-4 pb-2" {{on "click" (fn this.view slice.slice)}}>
+        <p><span class="text-sm">{{slice.slice.name}}</span><span class="text-xs font-bold">{{if slice.slice.canceled ' Canceled' ''}}</span></p>
+        <p class="text-xs">{{slice.slice.startTime}} - {{slice.slice.endTime}}</p>
+      </a>
+    {{/each}}
   </div>
 </div>
 

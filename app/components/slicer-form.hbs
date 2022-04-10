@@ -1,36 +1,38 @@
 {{#if this.slice}}
-  <div class="p-4 bg-blue-200 rounded-md w-2/3">
-    <h3 class="text-2xl">New Slice</h3>
-    <div class="grid grid-cols-3 gap-4 my-4">
-      <div class="col-span-2">
-        <label class="block">Name</label>
-        <Input @id="edit-slice-name" @value={{this.slice.name}} class="rounded-md border-gray-300 my-1 block w-full {{if this.errors.name "border-2 border-red-300 bg-red-200" ""}}"></Input>
-      </div>
-      <div class="col-span-1">
-        <label class="block">Maximum Guests</label>
-        <Input @id="edit-slice-max-guests" @type="number" @min="1" @value={{this.slice.maxGuests}} class="rounded-md border-gray-300 my-1 block w-full {{if this.errors.maxGuests "border-2 border-red-300 bg-red-200" ""}}"></Input>
-      </div>
-      <div class="col-span-1">
-        <label class="block">Date</label>
-        <Input @id="edit-slice-date" @type="date" @value={{this.slice.date}} class="rounded-md border-gray-300 my-1 w-full {{if this.errors.date "border-2 border-red-300 bg-red-200" ""}}"></Input>
-      </div>
-      <div class="col-span-1">
-        <label class="block">Start Time</label>
-        <Input @id="edit-slice-start-time" @type="time" @value={{this.slice.startTime}} class="rounded-md border-gray-300 my-1 w-full {{if this.errors.startTime "border-2 border-red-300 bg-red-200" ""}}"></Input>
-      </div>
-      <div class="col-span-1">
-        <label class="block">End Time</label>
-        <Input @id="edit-slice-end-time" @type="time" @value={{this.slice.endTime}} class="rounded-md border-gray-300 my-1 w-full {{if this.errors.endTime "border-2 border-red-300 bg-red-200" ""}}"></Input>
-      </div>
-      {{#if this.showError}}
-        <div class="col-span-3 border-red-300 border-2 p-2 rounded-md bg-red-200">
-          <p id="error-msg" class="text-red-800">Some fields are missing key information</p>
+  <div class="grid grid-cols-5">
+    <div class="p-4 bg-white rounded-md col-start-2 col-span-3">
+      <h3 class="text-2xl">New Slice</h3>
+      <div class="grid grid-cols-3 gap-4 my-4">
+        <div class="col-span-2">
+          <label class="block">Name</label>
+          <Input @id="edit-slice-name" @value={{this.slice.name}} class="rounded-md border-gray-300 my-1 block w-full {{if this.errors.name "border-2 border-red-300 bg-red-200" ""}}"></Input>
         </div>
-      {{/if}}
-    </div>
-    <div class="flex justify-between">
-      <button {{on "click" (fn this.cancel)}} id="cancel" class="bg-red-500 py-2 px-4 rounded col-span-1 justify-center text-white hover:bg-red-800">Cancel</button>
-      <button {{on "click" (fn this.save)}} id="save" class="bg-green-500 py-2 px-4 rounded col-span-1 justify-center text-white hover:bg-green-800">Save</button>
+        <div class="col-span-1">
+          <label class="block">Maximum Guests</label>
+          <Input @id="edit-slice-max-guests" @type="number" @min="1" @value={{this.slice.maxGuests}} class="rounded-md border-gray-300 my-1 block w-full {{if this.errors.maxGuests "border-2 border-red-300 bg-red-200" ""}}"></Input>
+        </div>
+        <div class="col-span-1">
+          <label class="block">Date</label>
+          <Input @id="edit-slice-date" @type="date" @value={{this.slice.date}} class="rounded-md border-gray-300 my-1 w-full {{if this.errors.date "border-2 border-red-300 bg-red-200" ""}}"></Input>
+        </div>
+        <div class="col-span-1">
+          <label class="block">Start Time</label>
+          <Input @id="edit-slice-start-time" @type="time" @value={{this.slice.startTime}} class="rounded-md border-gray-300 my-1 w-full {{if this.errors.startTime "border-2 border-red-300 bg-red-200" ""}}"></Input>
+        </div>
+        <div class="col-span-1">
+          <label class="block">End Time</label>
+          <Input @id="edit-slice-end-time" @type="time" @value={{this.slice.endTime}} class="rounded-md border-gray-300 my-1 w-full {{if this.errors.endTime "border-2 border-red-300 bg-red-200" ""}}"></Input>
+        </div>
+        {{#if this.showError}}
+          <div class="col-span-3 border-red-300 border-2 p-2 rounded-md bg-red-200">
+            <p id="error-msg" class="text-red-800">Some fields are missing key information</p>
+          </div>
+        {{/if}}
+      </div>
+      <div class="flex justify-between">
+        <button {{on "click" (fn this.cancel)}} id="cancel" class="bg-red-500 py-2 px-4 rounded col-span-1 justify-center text-white hover:bg-red-800">Cancel</button>
+        <button {{on "click" (fn this.save)}} id="save" class="bg-green-500 py-2 px-4 rounded col-span-1 justify-center text-white hover:bg-green-800">Save</button>
+      </div>
     </div>
   </div>
 {{else}}
