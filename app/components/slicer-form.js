@@ -8,6 +8,14 @@ export default class SlicerFormComponent extends Component {
 
   @tracked _showForm = this.args.showForm;
   @tracked _slice = undefined;
+  @tracked errors = {
+    name: undefined,
+    date: undefined,
+    startTime: undefined,
+    endTime: undefined,
+    maxGuests: undefined,
+  };
+  @tracked showError = false;
 
   get showForm() {
     return this._showForm;
@@ -23,16 +31,30 @@ export default class SlicerFormComponent extends Component {
     this._slice = val;
   }
 
+  validateSlice() {
+    this.errors = Object.fromEntries(
+      Object.keys(this.errors).map((x) => [x, !this.slice[x]])
+    );
+
+    return Object.keys(this.errors).every((key) => this.slice[key]);
+  }
+
   @action
   createSlice() {
+    this.showError = false;
     this.slice = this.store.createRecord('slice');
     this.showForm = !this.showForm;
   }
 
   @action
   save() {
-    this.slice.save();
-    this.showForm = !this.showForm;
+    if (this.validateSlice()) {
+      this.showError = false;
+      this.slice.save();
+      this.showForm = !this.showForm;
+    }
+
+    this.showError = true;
   }
 
   @action
@@ -45,5 +67,6 @@ export default class SlicerFormComponent extends Component {
 
     this.slice = undefined;
     this.showForm = false;
+    this.showError = false;
   }
 }

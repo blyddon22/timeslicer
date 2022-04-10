@@ -82,4 +82,16 @@ module('Integration | Component | slicer-form', function (hooks) {
     await click('#cancel');
     assert.dom('#edit-slice-name').doesNotExist();
   });
+
+  test('it shows message when form is invalid', async function (assert) {
+    await render(hbs`<SlicerForm/>`);
+    await click('#add-slice');
+    await click('#save');
+    assert.dom('#error-msg').exists();
+    assert.dom('#edit-slice-name.bg-red-200').exists();
+    assert.dom('#edit-slice-max-guests.bg-red-200').exists();
+    assert.dom('#edit-slice-date.bg-red-200').exists();
+    assert.dom('#edit-slice-start-time.bg-red-200').exists();
+    assert.dom('#edit-slice-end-time.bg-red-200').exists();
+  });
 });
