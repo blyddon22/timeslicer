@@ -7,7 +7,7 @@ export default Factory.extend({
     return faker.lorem.word();
   },
   date() {
-    return DateTime.fromJSDate(faker.date.future()).toFormat('yyyy-LL-dd');
+    return DateTime.now().toFormat('yyyy-LL-dd');
   },
   startTime() {
     return faker.date.future().toLocaleTimeString('en-US', {

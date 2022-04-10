@@ -1,12 +1,24 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { DateTime } from 'luxon';
 
 export default class SlicerListComponent extends Component {
   @tracked slice = false;
+  @tracked dateOffset = 0;
+
+  get date() {
+    return DateTime.now().plus({ days: this.dateOffset });
+  }
+
+  get formattedDate() {
+    return this.date.toFormat('DDD');
+  }
 
   get slices() {
-    let slices = this.args.slices.sortBy('filterDate', 'startTime', 'endTime');
+    let slices = this.args.slices
+      .filterBy('date', this.date.toFormat('yyyy-LL-dd'))
+      .sortBy('filterDate', 'startTime', 'endTime');
 
     return slices.map((slice) => {
       let ceil = Math.ceil(slice.startTimeInMinutes / 30);
@@ -36,5 +48,10 @@ export default class SlicerListComponent extends Component {
   @action
   view(slice) {
     this.slice = slice;
+  }
+
+  @action
+  updateDateOffset(val) {
+    this.dateOffset += val;
   }
 }

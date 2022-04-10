@@ -4,6 +4,7 @@ import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import cases from 'qunit-parameterize';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | slicer-list', function (hooks) {
   setupRenderingTest(hooks);
@@ -72,7 +73,7 @@ module('Integration | Component | slicer-list', function (hooks) {
     'it assigns correct row based on start time',
     async function (params, assert) {
       server.create('slice', {
-        date: '2022-01-01',
+        date: DateTime.now().toFormat('yyyy-LL-dd'),
         startTime: params.startTime,
       });
       let store = this.owner.lookup('service:store');
@@ -135,7 +136,7 @@ module('Integration | Component | slicer-list', function (hooks) {
     'it assigns correct span based on start time and end time difference',
     async function (params, assert) {
       server.create('slice', {
-        date: '2022-01-01',
+        date: DateTime.now().toFormat('yyyy-LL-dd'),
         startTime: '00:00',
         endTime: params.endTime,
       });
@@ -145,37 +146,6 @@ module('Integration | Component | slicer-list', function (hooks) {
       assert.dom('#slice-1').hasClass(`row-span-${params.span}`);
     }
   );
-
-  // TODO: Not sure what to tweak this too yet
-  // test('it orders slices correctly by default', async function (assert) {
-  //   server.create('slice', {
-  //     date: '2022-01-01',
-  //     startTime: '01:00',
-  //     endTime: '02:00',
-  //   });
-  //   server.create('slice', {
-  //     date: '2022-01-02',
-  //     startTime: '02:00',
-  //     endTime: '03:00',
-  //   });
-  //   server.create('slice', {
-  //     date: '2022-01-01',
-  //     startTime: '04:00',
-  //     endTime: '05:00',
-  //   });
-  //   server.create('slice', {
-  //     date: '2022-01-01',
-  //     startTime: '01:00',
-  //     endTime: '01:30',
-  //   });
-  //   let store = this.owner.lookup('service:store');
-  //   this.set('model', await store.findAll('slice'));
-  //   await render(hbs`<SlicerList @slices={{this.model}}/>`);
-  //   assert.dom('#slice-0').includesText('2022-01-01 01:00 01:30');
-  //   assert.dom('#slice-1').includesText('2022-01-01 01:00 02:00');
-  //   assert.dom('#slice-2').includesText('2022-01-01 04:00 05:00');
-  //   assert.dom('#slice-3').includesText('2022-01-02 02:00 03:00');
-  // });
 
   test('it can view a slice', async function (assert) {
     let slice = server.create('slice');

@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { visit, click, fillIn, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { DateTime } from 'luxon';
 
 module('Acceptance | slicer', function (hooks) {
   setupApplicationTest(hooks);
@@ -11,14 +12,14 @@ module('Acceptance | slicer', function (hooks) {
     await visit('/');
     await click('#add-slice');
     await fillIn('#edit-slice-name', 'Tour');
-    await fillIn('#edit-slice-date', '2022-01-01');
+    await fillIn('#edit-slice-date', DateTime.now().toFormat('yyyy-LL-dd'));
     await fillIn('#edit-slice-start-time', '01:00');
     await fillIn('#edit-slice-end-time', '03:00');
     await fillIn('#edit-slice-max-guests', '10');
     await click('#save');
     await click('#add-slice');
     await fillIn('#edit-slice-name', 'Demo');
-    await fillIn('#edit-slice-date', '2022-01-01');
+    await fillIn('#edit-slice-date', DateTime.now().toFormat('yyyy-LL-dd'));
     await fillIn('#edit-slice-start-time', '04:00');
     await fillIn('#edit-slice-end-time', '06:00');
     await fillIn('#edit-slice-max-guests', '5');
@@ -28,14 +29,14 @@ module('Acceptance | slicer', function (hooks) {
 
   test('adding slice prior to existing puts new slice before existing', async function (assert) {
     let slice = server.create('slice', {
-      date: '2022-01-01',
+      date: DateTime.now().toFormat('yyyy-LL-dd'),
       startTime: '02:00',
       endTime: '03:00',
     });
     await visit('/');
     await click('#add-slice');
     await fillIn('#edit-slice-name', 'Tour');
-    await fillIn('#edit-slice-date', '2022-01-01');
+    await fillIn('#edit-slice-date', DateTime.now().toFormat('yyyy-LL-dd'));
     await fillIn('#edit-slice-start-time', '01:00');
     await fillIn('#edit-slice-end-time', '02:00');
     await fillIn('#edit-slice-max-guests', '10');
@@ -48,14 +49,14 @@ module('Acceptance | slicer', function (hooks) {
 
   test('adding slice after existing puts new slice after existing', async function (assert) {
     let slice = server.create('slice', {
-      date: '2022-01-01',
+      date: DateTime.now().toFormat('yyyy-LL-dd'),
       startTime: '01:00',
       endTime: '02:00',
     });
     await visit('/');
     await click('#add-slice');
     await fillIn('#edit-slice-name', 'Tour');
-    await fillIn('#edit-slice-date', '2022-01-01');
+    await fillIn('#edit-slice-date', DateTime.now().toFormat('yyyy-LL-dd'));
     await fillIn('#edit-slice-start-time', '03:00');
     await fillIn('#edit-slice-end-time', '04:00');
     await fillIn('#edit-slice-max-guests', '10');
@@ -75,7 +76,7 @@ module('Acceptance | slicer', function (hooks) {
     await click('#slice-1');
     await click('#slice-edit');
     await fillIn('#edit-slice-name', 'Tour');
-    await fillIn('#edit-slice-date', '2022-01-01');
+    await fillIn('#edit-slice-date', DateTime.now().toFormat('yyyy-LL-dd'));
     await fillIn('#edit-slice-start-time', '01:00');
     await fillIn('#edit-slice-end-time', '02:00');
     await fillIn('#edit-slice-max-guests', '10');
@@ -87,6 +88,7 @@ module('Acceptance | slicer', function (hooks) {
     await visit('/');
     assert.dom('#slice-').doesNotExist();
     await click('#add-slice');
+    await fillIn('#edit-slice-date', DateTime.now().toFormat('yyyy-LL-dd'));
     assert.dom('#slice-').exists();
     await click('#cancel');
     assert.dom('#slice-').doesNotExist();
