@@ -16,17 +16,15 @@ export default class SlicerListComponent extends Component {
   }
 
   get slices() {
-    let slices = this.args.slices
+    return this.args.slices
       .filterBy('date', this.date.toFormat('yyyy-LL-dd'))
-      .sortBy('filterDate', 'startTime', 'endTime');
+      .map((slice) => {
+        let ceil = Math.ceil(slice.startTimeInMinutes / 30);
+        let row = slice.startTimeInMinutes % 30 === 0 ? ceil + 1 : ceil;
+        let span = (slice.endTimeInMinutes - slice.startTimeInMinutes) / 30;
 
-    return slices.map((slice) => {
-      let ceil = Math.ceil(slice.startTimeInMinutes / 30);
-      let row = slice.startTimeInMinutes % 30 === 0 ? ceil + 1 : ceil;
-      let span = (slice.endTimeInMinutes - slice.startTimeInMinutes) / 30;
-
-      return { slice: slice, row: row, span: span };
-    });
+        return { slice: slice, row: row, span: span };
+      });
   }
 
   @action

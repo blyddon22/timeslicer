@@ -32,11 +32,14 @@ export default class SlicerFormComponent extends Component {
     return Object.keys(this.errors).every((key) => this.slice[key]);
   }
 
-  setEditSlice() {
+  resetState() {
     if (this.args.setEditSlice) {
       this.args.setEditSlice(undefined);
     }
     console.log('Forgot to pass me a way to set edit slice');
+
+    this.slice = undefined;
+    this.showError = false;
   }
 
   @action
@@ -50,13 +53,11 @@ export default class SlicerFormComponent extends Component {
   @action
   save() {
     if (this.validateSlice()) {
-      this.showError = false;
       this.slice.save();
-      this.slice = undefined;
-      this.setEditSlice();
+      this.resetState();
+    } else {
+      this.showError = true;
     }
-
-    this.showError = true;
   }
 
   @action
@@ -67,8 +68,6 @@ export default class SlicerFormComponent extends Component {
       this.slice.rollbackAttributes();
     }
 
-    this.slice = undefined;
-    this.showError = false;
-    this.setEditSlice();
+    this.resetState();
   }
 }

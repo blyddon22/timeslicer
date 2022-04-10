@@ -27,46 +27,6 @@ module('Acceptance | slicer', function (hooks) {
     assert.dom('#slice-list .bg-blue-200').exists({ count: 2 });
   });
 
-  test('adding slice prior to existing puts new slice before existing', async function (assert) {
-    let slice = server.create('slice', {
-      date: DateTime.now().toFormat('yyyy-LL-dd'),
-      startTime: '02:00',
-      endTime: '03:00',
-    });
-    await visit('/');
-    await click('#add-slice');
-    await fillIn('#edit-slice-name', 'Tour');
-    await fillIn('#edit-slice-date', DateTime.now().toFormat('yyyy-LL-dd'));
-    await fillIn('#edit-slice-start-time', '01:00');
-    await fillIn('#edit-slice-end-time', '02:00');
-    await fillIn('#edit-slice-max-guests', '10');
-    await click('#save');
-    let slices = findAll('#slice-list .bg-blue-200 .text-sm').map((item) =>
-      item.textContent.trim()
-    );
-    assert.deepEqual(slices, ['Tour', slice.name]);
-  });
-
-  test('adding slice after existing puts new slice after existing', async function (assert) {
-    let slice = server.create('slice', {
-      date: DateTime.now().toFormat('yyyy-LL-dd'),
-      startTime: '01:00',
-      endTime: '02:00',
-    });
-    await visit('/');
-    await click('#add-slice');
-    await fillIn('#edit-slice-name', 'Tour');
-    await fillIn('#edit-slice-date', DateTime.now().toFormat('yyyy-LL-dd'));
-    await fillIn('#edit-slice-start-time', '03:00');
-    await fillIn('#edit-slice-end-time', '04:00');
-    await fillIn('#edit-slice-max-guests', '10');
-    await click('#save');
-    let slices = findAll('#slice-list .bg-blue-200 .text-sm').map((item) =>
-      item.textContent.trim()
-    );
-    assert.deepEqual(slices, [slice.name, 'Tour']);
-  });
-
   test('editing a slice shows changes', async function (assert) {
     let slice = server.create('slice', { startTime: '00:00' });
     await visit('/');
