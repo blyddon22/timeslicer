@@ -71,7 +71,6 @@ module('Integration | Component | slicer-list', function (hooks) {
   ]).test(
     'it assigns correct row based on start time',
     async function (params, assert) {
-      console.log(this);
       server.create('slice', {
         date: '2022-01-01',
         startTime: params.startTime,

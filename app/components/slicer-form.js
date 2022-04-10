@@ -37,7 +37,9 @@ export default class SlicerFormComponent extends Component {
 
   @action
   cancel() {
-    // TODO if its a new slice delete it.
+    if (this.slice.isNew) {
+      this.store.deleteRecord(this.slice);
+    }
     this.slice = undefined;
     this.showForm = false;
   }

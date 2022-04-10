@@ -82,4 +82,13 @@ module('Acceptance | slicer', function (hooks) {
     await click('#save');
     assert.dom('#slice-list .bg-blue-200').hasText('Tour 01:00 - 02:00');
   });
+
+  test('canceling new slice removes from store', async function (assert) {
+    await visit('/');
+    assert.dom('#slice-').doesNotExist();
+    await click('#add-slice');
+    assert.dom('#slice-').exists();
+    await click('#cancel');
+    assert.dom('#slice-').doesNotExist();
+  });
 });

@@ -59,4 +59,12 @@ module('Integration | Component | slicer-form', function (hooks) {
     assert.equal(server.schema.slices.first().endTime, '03:00');
     assert.equal(server.schema.slices.first().maxGuests, '10');
   });
+
+  test('it can cancel creating slice', async function (assert) {
+    await render(hbs`<SlicerForm/>`);
+    await click('#add-slice');
+    assert.dom('#edit-slice-name').exists();
+    await click('#cancel');
+    assert.dom('#edit-slice-name').doesNotExist();
+  });
 });
